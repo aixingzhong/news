@@ -1,7 +1,7 @@
 package com.axz.servlet;
 
 import com.axz.entity.CategoryEntity;
-import com.axz.service.impl.ColumnServiceImpl;
+import com.axz.service.impl.CategoryServiceImpl;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -13,14 +13,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet("/ColumnServlet")
-public class ColumnServlet extends HttpServlet {
+@WebServlet("/CategoryServlet")
+public class CategoryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json; charset=utf-8");
         try {
-            ArrayList<CategoryEntity> data = new ColumnServiceImpl().queryAllColumn();
+            ArrayList<CategoryEntity> data = new CategoryServiceImpl().queryAllCategory();
             JSONObject json = new JSONObject();
             json.put("result", data);
             json.put("code", "1");

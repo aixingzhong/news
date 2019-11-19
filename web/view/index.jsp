@@ -34,15 +34,15 @@
         </div>
     </div>
 </header>
-<div class="carousel_box">
+<div class="carousel_box" id="carouselBox">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+           <%-- <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>--%>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
+            <%--<div class="carousel-item active">
                 <img src="http://pic8.dwnews.net/20191114/a34e672e8bc59f07bf2b1aa4916a3e27_w.jpg" class="d-block w-100"
                      alt="...">
                 <div class="carousel-caption d-none d-md-block">
@@ -65,7 +65,7 @@
                     <h5>Third slide label</h5>
                     <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
