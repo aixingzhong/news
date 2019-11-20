@@ -1,6 +1,7 @@
 package com.axz.dao.impl;
 
 import com.axz.dao.ICategoryDao;
+import com.axz.entity.ArticleEntity;
 import com.axz.entity.CategoryEntity;
 import com.axz.entity.NewsEntity;
 
@@ -94,6 +95,58 @@ public class CategoryDaoImpl implements ICategoryDao {
                 }
                 if (prepareStatement != null) {
                     prepareStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public ArticleEntity queryArticle(int id){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/news?serverTimezone=UTC", "root", "root");
+
+            String sql = "SELECT * from news WHERE newsID =" + id;
+            preparedStatement = connection.prepareStatement(sql);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                ArticleEntity newsEntity = new ArticleEntity(
+                        result.getInt("newsID"),
+                        result.getString("newsTitle"),
+                        result.getString("newsContent"),
+                        result.getString("newDate"),
+                        result.getString("newsDesc"),
+                        result.getString("newsImagePath"),
+                        result.getInt("newRate"),
+                        result.getBoolean("newsIscheck"),
+                        result.getBoolean("newsIstop")
+                );
+                return newsEntity;
+            } else {
+                return null;
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
                 }
                 if (connection != null) {
                     connection.close();

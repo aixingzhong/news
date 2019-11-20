@@ -51,7 +51,7 @@ function queryNews() {
                 for (var i = 0; i < len; i++) {
                     indicators += ` <li data-target="#carouselExampleCaptions" data-slide-to="${i}" class="${i === 0 ? "active" : ""}"></li>`;
                     inner += `<div class="carousel-item ${i === 0 ? "active" : ""}">
-                <a href="/news/${oData[i].newsID}" target="_blank"><img src="${oData[i].newsImagePath}" class="d-block w-100"
+                <a href="/news/article/${oData[i].newsID}" target="_blank"><img src="${oData[i].newsImagePath}" class="d-block w-100"
                      alt="..."></a>
                 <div class="carousel-caption d-none d-md-block">
                     <h2>${oData[i].newsTitle}</h2>

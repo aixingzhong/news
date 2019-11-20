@@ -1,6 +1,7 @@
 package com.axz.service.impl;
 
 import com.axz.dao.impl.CategoryDaoImpl;
+import com.axz.entity.ArticleEntity;
 import com.axz.entity.CategoryEntity;
 import com.axz.entity.NewsEntity;
 import com.axz.service.ICategoryService;
@@ -17,5 +18,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public ArrayList<NewsEntity> queryNews() {
         return new CategoryDaoImpl().queryNews();
+    }
+
+    @Override
+    public ArticleEntity queryArticle(int id) {
+        return new CategoryDaoImpl().queryArticle(id);
     }
 }
