@@ -1,4 +1,4 @@
-package com.axz.servlet;
+package com.axz.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

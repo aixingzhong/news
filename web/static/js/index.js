@@ -9,33 +9,9 @@ $(document).scroll(function () {
     }
 });
 var jDom = {
-    columnList: $("#columnList"),
     carouselBox: $("#carouselBox"),
+    newsList: $("#newsList")
 };
-
-function queryNavigation() {
-    $.ajax({
-        url: "/news/CategoryServlet",
-        type: "get",
-        data: {},
-        success: function (data) {
-            if (data.code === "1") {
-                var sHtml = "";
-                var oData = data.result,
-                    len = oData.length;
-                for (var i = 0; i < len; i++) {
-                    sHtml += `<li data-id="${oData[i].categoryID}">${oData[i].categoryName}</li>`;
-                }
-                jDom.columnList.html(sHtml);
-            } else {
-                alert(data.msg);
-            }
-        },
-        error: function (e) {
-            alert("网络请求出错")
-        }
-    })
-}
 
 function queryNews() {
     $.ajax({
@@ -71,7 +47,37 @@ function queryNews() {
     })
 }
 
-// 查询导航栏
-queryNavigation();
-// 查询新闻
+function queryAllNews() {
+    $.ajax({
+        url: "/news/NewsServlet",
+        type: "get",
+        data: {},
+        success: function (data) {
+            if (data.code === "1") {
+                var oData = data.result,
+                    len = oData.length;
+                var sHtml = "";
+                for (var i = 0; i < len; i++) {
+                    sHtml += `<li class="col-md-4">
+                     <a href="/news/article/${oData[i].newsID}" target="_blank">
+                        <img src="${oData[i].newsImagePath}" class="section_news_img">
+                      </a>
+                        <a href="/news/article/${oData[i].newsID}" target="_blank" class="section_news_title">${oData[i].newsTitle}</a>
+                        <div class="section_news_date">${oData[i].newDate}</div> 
+                    </li>`
+                }
+                jDom.newsList.html(sHtml);
+            } else {
+                alert(data.msg);
+            }
+        },
+        error: function (e) {
+            alert("网络请求出错")
+        }
+    })
+}
+
+// 查询置顶新闻
 queryNews();
+// 查询要闻
+queryAllNews();

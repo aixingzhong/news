@@ -4,6 +4,7 @@ import com.axz.dao.ICategoryDao;
 import com.axz.entity.ArticleEntity;
 import com.axz.entity.CategoryEntity;
 import com.axz.entity.NewsEntity;
+import com.axz.utils.JDBCUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,17 +13,15 @@ public class CategoryDaoImpl implements ICategoryDao {
     @Override
     public ArrayList<CategoryEntity> queryCategory() {
         Connection connection = null;
-        PreparedStatement prepareStatement = null;
+        PreparedStatement preparedStatement = null;
         ResultSet result = null;
+        ArrayList<CategoryEntity> listMap = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/news?serverTimezone=UTC", "root",
-                    "root");
+            connection = JDBCUtils.getConnection();
             String sql = "SELECT categoryID,categoryName,categoryDesc FROM `category`";
-            //3.获取用于向数据库发送sql语句的Preperedstatement
-            prepareStatement = connection.prepareStatement(sql);
-            result = prepareStatement.executeQuery();
-            ArrayList<CategoryEntity> listMap = new ArrayList<CategoryEntity>();
+            preparedStatement = connection.prepareStatement(sql);
+            result = preparedStatement.executeQuery();
+            listMap = new ArrayList<CategoryEntity>();
             while (result.next()) {
                 CategoryEntity categoryEntity = new CategoryEntity();
                 categoryEntity.setCategoryName(result.getString("categoryName"));
@@ -30,43 +29,26 @@ public class CategoryDaoImpl implements ICategoryDao {
                 categoryEntity.setCategoryDesc(result.getString("categoryDesc"));
                 listMap.add(categoryEntity);
             }
-            return listMap;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (prepareStatement != null) {
-                    prepareStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            JDBCUtils.close(connection, preparedStatement, result);
         }
+        return listMap;
     }
 
     @Override
     public ArrayList<NewsEntity> queryNews() {
         Connection connection = null;
-        PreparedStatement prepareStatement = null;
+        PreparedStatement preparedStatement = null;
         ResultSet result = null;
+        ArrayList<NewsEntity> list = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/news?serverTimezone=UTC", "root",
-                    "root");
+            connection = JDBCUtils.getConnection();
             String sql = "select * from news;";
-            prepareStatement = connection.prepareStatement(sql);
-            result = prepareStatement.executeQuery();
-            ArrayList<NewsEntity> list = new ArrayList<NewsEntity>();
+            preparedStatement = connection.prepareStatement(sql);
+            result = preparedStatement.executeQuery();
+            list = new ArrayList<NewsEntity>();
             while (result.next()) {
                 NewsEntity newsEntity = new NewsEntity(
                         result.getInt("newsID"),
@@ -81,44 +63,27 @@ public class CategoryDaoImpl implements ICategoryDao {
                 );
                 list.add(newsEntity);
             }
-            return list;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (prepareStatement != null) {
-                    prepareStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            JDBCUtils.close(connection, preparedStatement, result);
         }
+        return list;
     }
 
     @Override
-    public ArticleEntity queryArticle(int id){
+    public ArticleEntity queryArticle(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
+        ArticleEntity articleEntity = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/news?serverTimezone=UTC", "root", "root");
-
+            connection = JDBCUtils.getConnection();
             String sql = "SELECT * from news WHERE newsID =" + id;
             preparedStatement = connection.prepareStatement(sql);
             result = preparedStatement.executeQuery();
             if (result.next()) {
-                ArticleEntity newsEntity = new ArticleEntity(
+                articleEntity = new ArticleEntity(
                         result.getInt("newsID"),
                         result.getString("newsTitle"),
                         result.getString("newsContent"),
@@ -129,31 +94,12 @@ public class CategoryDaoImpl implements ICategoryDao {
                         result.getBoolean("newsIscheck"),
                         result.getBoolean("newsIstop")
                 );
-                return newsEntity;
-            } else {
-                return null;
             }
-
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            JDBCUtils.close(connection, preparedStatement, result);
         }
+        return articleEntity;
     }
 }

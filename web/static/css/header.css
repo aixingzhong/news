@@ -1,0 +1,86 @@
+.header_box {
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    background-color: #ffff;
+    z-index: 999;
+    border-bottom: 1px solid #f1e9e9;
+}
+
+.header_left {
+    float: left;
+    text-align: center;
+    margin-top: 17px;
+    height: 70px;
+}
+
+.header_left_font {
+    font-size: 18px;
+    color: #1d24ff;
+    vertical-align: bottom;
+}
+
+
+.header_content {
+    float: left;
+    height: 70px;
+    overflow: hidden;
+}
+
+.header_content_list > li {
+    list-style: none;
+    float: left;
+    color: #222;
+    height: 70px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 70px;
+}
+
+.header_href {
+    color: #222;
+}
+
+.header_content_list > li:nth-child(1) .header_separator {
+    display: none;
+}
+
+.header_separator {
+    margin: 0 30px;
+    color: #aaa;
+    font-weight: normal;
+}
+
+.header_href:hover {
+    color: #ff5f12;
+    text-decoration: none;
+}
+
+.header_content_list > .active {
+    color: #ff5f12;
+}
+
+.header_right {
+    float: right;
+    height: 70px;
+}
+
+.header_right_notLogged {
+    height: 70px;
+    line-height: 70px;
+}
+
+.header_right_separator {
+    padding: 0 5px;
+}
+
+.header_right_login, .header_right_register {
+    color: #222;
+}
+
+.header_right_login:hover, .header_right_register:hover {
+    color: #ff5f12;
+    text-decoration: none;
+}
