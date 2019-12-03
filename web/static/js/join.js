@@ -1,5 +1,5 @@
 $(function () {
-    var jDom = {
+    let jDom = {
         username: $("#username"),
         phone: $("#phone"),
         email: $("#email"),
@@ -10,10 +10,10 @@ $(function () {
         dialog: $("#dialog")
     };
     jDom.submit.on("click", function () {
-        var username = $.trim(jDom.username.val()),
-            pwd = $.trim(jDom.phone.val()),
+        let username = $.trim(jDom.username.val()),
+            pwd = $.trim(jDom.pwd.val()),
             phone = $.trim(jDom.phone.val()),
-            email = $.trim(jDom.phone.val());
+            email = $.trim(jDom.email.val());
         if (username === "") {
             jDom.dialog.html("请输入用户名");
             jDom.dialog.dialog();
@@ -40,14 +40,15 @@ $(function () {
             return false;
         }
         $.ajax({
-            url: '/news/publicKeyServlet',
+            url: '/news/getPublicKeyServlet',
             type: "get",
             success: function (data) {
-                var encrypt = new JSEncrypt();
-                encrypt.setPublicKey(data.publicKey);
-                var name = encrypt.encrypt(username),
+                let encrypt = new JSEncrypt();
+                let publicKey = encrypt.getPublicKey(data.result);
+                encrypt.setPublicKey(publicKey);
+                let name = encrypt.encrypt(username),
                     passwd = encrypt.encrypt(pwd);
-                var obj = {
+                let obj = {
                     username: name,
                     pwd: passwd,
                     phone: phone,

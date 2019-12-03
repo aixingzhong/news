@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
             String passwd = userEntity.getPasswd();
             String email = userEntity.getEmail();
             String phone = userEntity.getPhone();
-            String sql = "INSERT INTO USER (name, phone, passwd, email) values (?,?,?,?)";
+            String sql = "INSERT INTO USER (user_name, phone, passwd, email) values (?,?,?,?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, phone);

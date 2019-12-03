@@ -18,21 +18,21 @@ public class JoinServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
-        String name = null;
-        String passwd = null;
-//        PrivateKey privateKey = RSAUtils.getKeyPair().containsKey();
-//        RSAUtils.privateDecrypt(request.getParameter("username"),privateKey);
-        try {
-            name = SHAUtils.shaEncode(request.getParameter("username"));
-            passwd = SHAUtils.shaEncode(request.getParameter("pwd"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String encryptionName = request.getParameter("username");
+        String encryptionPwd = request.getParameter("pwd");
+        PrivateKey getPrivateKey = RSAUtils.getPrivateKey();
+        String name = RSAUtils.privateDecrypt(encryptionName.getBytes(), getPrivateKey).toString();
+        String pwd = RSAUtils.privateDecrypt(encryptionPwd.getBytes(), getPrivateKey).toString();
+        System.out.println("用户名：" + name);
+        System.out.println("密码：" + pwd);
+        String shaEncodeName = SHAUtils.shaEncode(name);
+        String shaEncodePwd = SHAUtils.shaEncode(pwd);
+
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         UserEntity userEntity = new UserEntity();
-        userEntity.setName(name);
-        userEntity.setPasswd(passwd);
+        userEntity.setName(shaEncodeName);
+        userEntity.setPasswd(shaEncodePwd);
         userEntity.setEmail(email);
         userEntity.setPhone(phone);
         int res = new UserServiceImpl().insertUser(userEntity);
